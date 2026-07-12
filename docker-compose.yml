@@ -1,0 +1,43 @@
+name: roboshop
+services:
+  mongodb:
+    build: ./mongodb
+    image: mrmotam/mongodb:v1
+    container_name: mongodb
+  redis:
+    image: redis:7
+    container_name: redis
+  mysql:
+    build: ./mysql
+    image: mrmotam/mysql:v1
+    container_name: mysql
+    command: --mysql_native_password=ON --innodb-lock_wait_timeout=120  
+    environment:
+      - MYSQL_ROOT_PASSWORD: 'RoboShop@1'
+  rabbitmq:
+    image: rabbitmq:4.3
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER: roboshop
+        RABBITMQ_DEFAULT_PASS: roboshop123
+  catalogue:
+    build: ./catalogue
+    image: mrmotam/catalogue:v1
+    container_name: catalogue
+    environment:
+      - MONGO: true
+        MONGO_URL: "mongodb://mongodb:27017/catalogue"
+    depends_on:
+      - mongodb
+  user:
+    build: ./user
+    image: mrmotam/user:v1
+    container_name: user
+    environment:
+      - MONGO: true
+        MONGO_URL: "mongodb://mongodb:27017/users"
+        REDIS_URL: "redis://redis:6379"
+    depends_on:
+      - mongodb
+      - redis
+volumes:
