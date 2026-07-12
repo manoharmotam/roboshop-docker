@@ -13,20 +13,20 @@ services:
     container_name: mysql
     command: --mysql_native_password=ON --innodb-lock_wait_timeout=120  
     environment:
-      - MYSQL_ROOT_PASSWORD: 'RoboShop@1'
+      MYSQL_ROOT_PASSWORD: 'RoboShop@1'
   rabbitmq:
     image: rabbitmq:4.3
     container_name: rabbitmq
     environment:
-      - RABBITMQ_DEFAULT_USER: roboshop
-        RABBITMQ_DEFAULT_PASS: roboshop123
+      RABBITMQ_DEFAULT_USER: "roboshop"
+      RABBITMQ_DEFAULT_PASS: "roboshop123"
   catalogue:
     build: ./catalogue
     image: mrmotam/catalogue:v1
     container_name: catalogue
     environment:
-      - MONGO: true
-        MONGO_URL: "mongodb://mongodb:27017/catalogue"
+      MONGO: true
+      MONGO_URL: "mongodb://mongodb:27017/catalogue"
     depends_on:
       - mongodb
   user:
@@ -34,9 +34,9 @@ services:
     image: mrmotam/user:v1
     container_name: user
     environment:
-      - MONGO: true
-        MONGO_URL: "mongodb://mongodb:27017/users"
-        REDIS_URL: "redis://redis:6379"
+      MONGO: "true"
+      MONGO_URL: "mongodb://mongodb:27017/users"
+      REDIS_URL: "redis://redis:6379"
     depends_on:
       - mongodb
       - redis
@@ -45,9 +45,9 @@ services:
     image: mrmotam/cart:v1
     container_name: cart
     environment:
-      - REDIS_HOST: redis
-        CATALOGUE_HOST: catalogue
-        CATALOGUE_PORT: 8080
+      REDIS_HOST: redis
+      CATALOGUE_HOST: catalogue
+      CATALOGUE_PORT: 8080
     depends_on:
       - redis
       - catalogue
@@ -56,27 +56,27 @@ services:
     image: mrmotam/shipping:v1
     container_name: shipping
     environment:
-      - CART_ENDPOINT: "cart:8080"
-        DB_HOST: mysql
+      CART_ENDPOINT: "cart:8080"
+      DB_HOST: mysql
     depends_on:
       - mysql
-        cart
+      - cart
   payment:
     build: ./payment
     image: mrmotam/payment:v1
     container_name: payment
     environment:
-      - CART_HOST: cart
-        CART_PORT: 8080
-        USER_HOST: user
-        USER_PORT: 8080
-        AMQP_HOST: rabbitmq
-        AMQP_USER: roboshop
-        AMQP_PASS: roboshop123
+      CART_HOST: cart
+      CART_PORT: 8080
+      USER_HOST: user
+      USER_PORT: 8080
+      AMQP_HOST: rabbitmq
+      AMQP_USER: roboshop
+      AMQP_PASS: roboshop123
     depends_on:
       - rabbitmq
-        cart
-        user
+      - cart
+      - user
 networks:
   default:
     name: robostore
