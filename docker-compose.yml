@@ -79,7 +79,7 @@ services:
       - user
   frontend:
     build: ./frontend
-    image: mrmotam/frontend:v1
+    image: mrmotam/frontend:v2
     container_name: frontend
     ports:
       - "80:80"
