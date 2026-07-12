@@ -5,4 +5,4 @@ COPY pom.xml /app/
 RUN mvn clean package
 RUN mv target/shipping-1.0.jar shipping.jar 
 EXPOSE 8080
-CMD [ "/bin/java", "-jar", "shipping.jar" ]
+CMD [ "java", "-jar", "shipping.jar" ]
