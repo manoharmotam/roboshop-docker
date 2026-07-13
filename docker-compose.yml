@@ -5,9 +5,13 @@ services:
     build: ./mongodb
     image: mrmotam/mongodb:v1
     container_name: mongodb
+    volumes:
+      - mongodb
   redis:
     image: redis:7
     container_name: redis
+    volumes:
+      - redis
   mysql:
     build: ./mysql
     image: mrmotam/mysql:v1
@@ -21,12 +25,16 @@ services:
       timeout: 5s
       retries: 30
       start_period: 30s
+    volumes:
+      - mysql
   rabbitmq:
     image: rabbitmq:4.3
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: "roboshop"
       RABBITMQ_DEFAULT_PASS: "roboshop123"
+    volumes:
+      - rabbitmq
   catalogue:
     build: ./catalogue
     image: mrmotam/catalogue:v1
@@ -101,3 +109,8 @@ networks:
     name: robostore
     driver: bridge
     external: false
+volumes:
+  mongodb:
+  redis:
+  mysql:
+  rabbitmq:
