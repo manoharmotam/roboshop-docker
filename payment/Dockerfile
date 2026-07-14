@@ -12,6 +12,6 @@ EXPOSE 8080
 RUN addgroup -S roboshop && adduser -S -G roboshop roboshop && \
     chown -R roboshop:roboshop /app
 COPY --from=builder /install /usr/local/
-COPY *.py payment.ini requirements.txt .
+COPY *.py payment.ini requirements.txt /app/
 USER roboshop
 CMD [ "/usr/local/bin/uwsgi", "--ini", "payment.ini"]
