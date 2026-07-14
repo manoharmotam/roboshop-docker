@@ -5,7 +5,7 @@ COPY pom.xml /app/
 RUN mvn clean package
 RUN mv target/shipping-1.0.jar shipping.jar 
 
-FROM maven:3.9.16-eclipse-temurin-21-alpine
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 EXPOSE 8080
 RUN addgroup -S roboshop && adduser -S -G roboshop roboshop && \
