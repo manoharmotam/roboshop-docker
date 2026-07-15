@@ -3,6 +3,7 @@ RUN rm -rf /usr/share/nginx/html/* && \
     rm -rf /etc/nginx/nginx.conf && \
     rm -rf /etc/nginx/conf.d/default.conf
 
+#creating the necessary nginx folders
 RUN mkdir -p /var/cache/nginx/client_temp && \
         mkdir -p /var/cache/nginx/proxy_temp && \
         mkdir -p /var/cache/nginx/fastcgi_temp && \
