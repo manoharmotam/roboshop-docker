@@ -5,12 +5,12 @@ services:
     image: mrmotam/mongodb:v1
     container_name: mongodb
     volumes:
-      - mongodb
+    - mongodb:/data/db/
   redis:
     image: redis:7
     container_name: redis
     volumes:
-      - redis
+      - redis:/data
   mysql:
     build: ./mysql
     image: mrmotam/mysql:v1
@@ -25,7 +25,7 @@ services:
       retries: 30
       start_period: 30s
     volumes:
-      - mysql
+      - mysql:/var/lib/mysql
   rabbitmq:
     image: rabbitmq:4.3
     container_name: rabbitmq
@@ -33,7 +33,7 @@ services:
       RABBITMQ_DEFAULT_USER: "roboshop"
       RABBITMQ_DEFAULT_PASS: "roboshop123"
     volumes:
-      - rabbitmq
+      - rabbitmq:/var/lib/myqsl 
   catalogue:
     build: ./catalogue
     image: mrmotam/catalogue:v1
@@ -77,7 +77,7 @@ services:
     - mysql      
   payment:
     build: ./payment
-    image: mrmotam/payment:v1
+    image: mrmotam/payment:v2
     container_name: payment
     environment:
       CART_HOST: cart
